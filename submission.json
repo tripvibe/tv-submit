@@ -1,0 +1,16 @@
+{
+  "location_lat": -27.502,
+  "location_lng": 152.897,
+  "sentiment": {
+    "capacity": 50,
+    "route_direction": "City",
+    "route_number": "216",
+    "route_type": "Bus",
+    "stop_name": "Sunshine Station - City via Dynon Rd",
+    "vibe": 67,
+    "departure_time": "2020-06-23T05:27:24.000Z"
+  },
+  "submitter": {
+    "device_id": "8316080933289526961"
+  }
+}
