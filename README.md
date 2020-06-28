@@ -5,9 +5,13 @@
 /opt/kafka_2.12-2.2.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic tripvibe
 ```
 
-
 TimelyDataFlow using materialize.io
+
 ```
+# schema load
+psql -h localhost -p 6875 materialize -f ./load.sql
+psql -h localhost -p 6875 materialize -f ./load-auto.sql
+
 # psql -h localhost -p 6875 materialize
 
 # create kafka source
