@@ -31,8 +31,8 @@ public class QueryResource {
     @GET
     @Path("/count/{route_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Integer count(@PathParam String route_id) {
-        return entityManager.createQuery("select count(*) from ROUTE" + route_id + " r", Integer.class).getSingleResult();
+    public Long count(@PathParam String route_id) {
+        return entityManager.createQuery("select count(*) from ROUTE" + route_id + " r", Long.class).getSingleResult();
     }
 
     @GET
