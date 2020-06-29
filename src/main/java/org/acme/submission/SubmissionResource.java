@@ -100,7 +100,7 @@ public class SubmissionResource {
 
         JSONObject sentiment = new JSONObject();
         sentiment.put("capacity", new Random().nextInt(100) + 1);
-        sentiment.put("route_direction", "City");
+        sentiment.put("route_direction", (new Random().nextBoolean() ? "City":"Country"));
         sentiment.put("route_number", "216");
         sentiment.put("route_type", "Bus");
         sentiment.put("stop_name", "Sunshine Station - City via Dynon Rd");

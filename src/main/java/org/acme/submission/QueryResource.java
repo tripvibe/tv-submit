@@ -36,6 +36,13 @@ public class QueryResource {
     }
 
     @GET
+    @Path("/count/{route_id}/{route_direction}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Long countDirected(@PathParam String route_id, @PathParam String route_direction) {
+        return entityManager.createQuery("select count(*) from ROUTE" + route_id + " r where route_direction = '\"" + route_direction + "\"'", Long.class).getSingleResult();
+    }
+
+    @GET
     @Path("/capacity-average/{route_id}")
     @Produces(MediaType.TEXT_PLAIN)
     public Double avgCapacity(@PathParam String route_id) {
@@ -50,6 +57,20 @@ public class QueryResource {
     }
 
     @GET
+    @Path("/capacity-average/{route_id}/{route_direction}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Double avgCapacityDirected(@PathParam String route_id, @PathParam String route_direction) {
+        return entityManager.createQuery("select avg(capacity) from ROUTE" + route_id + " where route_direction = '\"" + route_direction + "\"'", Double.class).getSingleResult();
+    }
+
+    @GET
+    @Path("/vibe-average/{route_id}/{route_direction}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Double avgVibeDirected(@PathParam String route_id, @PathParam String route_direction) {
+        return entityManager.createQuery("select avg(vibe) from ROUTE" + route_id +  " where route_direction = '\"" + route_direction + "\"'", Double.class).getSingleResult();
+    }
+
+    @GET
     @Path("/capacity-average/{route_id}/{start}/{end}")
     @Produces(MediaType.TEXT_PLAIN)
     public Double avgCapacityDateTime(@PathParam String route_id, @PathParam String start, @PathParam String end) {
@@ -61,6 +82,20 @@ public class QueryResource {
     @Produces(MediaType.TEXT_PLAIN)
     public Double avgVibeDateTime(@PathParam String route_id, @PathParam String start, @PathParam String end) {
         return entityManager.createQuery("select avg(vibe) from ROUTE" + route_id + " where departure_time between '" + start + "' and '" + end + "'", Double.class).getSingleResult();
+    }
+
+    @GET
+    @Path("/capacity-average/{route_id}/{start}/{end}/{route_direction}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Double avgCapacityDateTimeDirected(@PathParam String route_id, @PathParam String start, @PathParam String end, @PathParam String route_direction) {
+        return entityManager.createQuery("select avg(capacity) from ROUTE" + route_id + " where departure_time between '" + start + "' and '" + end + "' and route_direction = '\"" + route_direction + "\"'", Double.class).getSingleResult();
+    }
+
+    @GET
+    @Path("/vibe-average/{route_id}/{start}/{end}/{route_direction}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Double avgVibeDateTimeDirected(@PathParam String route_id, @PathParam String start, @PathParam String end, @PathParam String route_direction) {
+        return entityManager.createQuery("select avg(vibe) from ROUTE" + route_id + " where departure_time between '" + start + "' and '" + end + "' and route_direction = '\"" + route_direction + "\"'", Double.class).getSingleResult();
     }
 
 }
