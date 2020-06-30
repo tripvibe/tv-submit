@@ -3604,7 +3604,6 @@ spec:
       from:
         kind: ImageStreamTag
         name: tv-submit:latest
-        namespace: tv-submit
       lastTriggeredImage: quay.io/eformat/tv-submit:latest
     type: ImageChange
 ---
