@@ -95,3 +95,9 @@ DROP VIEW ROUTE216;
 DROP VIEW all_tripvibe;
 DROP SOURCE tripvibe;
 ```
+
+## OpenShift
+
+```bash
+oc create -f materialize-deployment.yml
+```
