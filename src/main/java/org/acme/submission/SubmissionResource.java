@@ -86,11 +86,6 @@ public class SubmissionResource {
         return rawData;
     }
 
-    /**
-     * internal read method from realtime datasource
-     *
-     * @return
-     */
     private List<String> _read() {
         List<String> subs = new ArrayList<>();
         JSONObject submission = new JSONObject();
@@ -100,12 +95,19 @@ public class SubmissionResource {
 
         JSONObject sentiment = new JSONObject();
         sentiment.put("capacity", new Random().nextInt(100) + 1);
-        sentiment.put("route_direction", (new Random().nextBoolean() ? "City":"Country"));
+        sentiment.put("direction", (new Random().nextBoolean() ? "City":"Country"));
+        sentiment.put("direction_id", (new Random().nextBoolean() ? "13":"63"));
         sentiment.put("route_number", "216");
-        sentiment.put("route_type", "Bus");
+        sentiment.put("route_type", "2");
+        sentiment.put("route_id", "887");
+        sentiment.put("run_id", "RUN367");
         sentiment.put("stop_name", "Sunshine Station - City via Dynon Rd");
+        sentiment.put("stop_id", "3155");
         sentiment.put("vibe", new Random().nextInt(100) + 1);
         sentiment.put("departure_time", getRandomTime());
+        sentiment.put("estimated_departure_time", getRandomTime());
+        sentiment.put("at_platform", false);
+        sentiment.put("platform_number", "");
 
         JSONObject submitter = new JSONObject();
         submitter.put("device_id", "8316080933289526961");
@@ -116,12 +118,30 @@ public class SubmissionResource {
         subs.add(submission.toString());
 
         // add another
+        submitter.put("device_id", "9372372349923333");
+
         sentiment.put("route_type", "Tram");
         sentiment.put("route_number", "90");
-        submission.put("sentiment", sentiment);
-        submission.put("timestamp_created", getRandomTime());
         sentiment.put("departure_time", getRandomTime());
+        sentiment.put("capacity", new Random().nextInt(50) + 51);
+        sentiment.put("direction", (new Random().nextBoolean() ? "City":"Country"));
+        sentiment.put("direction_id", (new Random().nextBoolean() ? "13":"63"));
+        sentiment.put("route_number", "90");
+        sentiment.put("route_type", "3");
+        sentiment.put("route_id", "11795");
+        sentiment.put("run_id", "RUN12");
+        sentiment.put("stop_name", "Dandenong");
+        sentiment.put("stop_id", "21");
+        sentiment.put("vibe", new Random().nextInt(50) + 51);
+        sentiment.put("departure_time", getRandomTime());
+        sentiment.put("estimated_departure_time", getRandomTime());
+        sentiment.put("at_platform", true);
+        sentiment.put("platform_number", "1");
+
+        submission.put("timestamp_created", getRandomTime());
         submission.put("sentiment", sentiment);
+        submission.put("submitter", submitter);
+
         subs.add(submission.toString());
 
         return subs;

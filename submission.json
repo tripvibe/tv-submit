@@ -2,15 +2,23 @@
   "location_lat": -27.502,
   "location_lng": 152.897,
   "sentiment": {
-    "capacity": 50,
-    "route_direction": "City",
-    "route_number": "216",
+    "capacity": 99,
+    "direction": "City",
+    "direction_id": "2",
+    "route_number": "13",
     "route_type": "Bus",
-    "stop_name": "Sunshine Station - City via Dynon Rd",
-    "vibe": 67,
-    "departure_time": "2020-06-23T05:27:24.000Z"
+    "route_id": "13179",
+    "stop_name": "Mike's Road",
+    "stop_id": "476",
+    "vibe": 31,
+    "departure_time": "2020-07-01T05:27:24.000Z",
+    "at_platform": true,
+    "estimated_departure_time": "2020-07-01T05:27:24.000Z",
+    "platform_number": "4",
+    "run_id": "RUN543"
   },
   "submitter": {
     "device_id": "8316080933289526961"
   }
 }
+

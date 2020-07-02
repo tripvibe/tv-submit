@@ -23,16 +23,23 @@ SHOW COLUMNS FROM tripvibe;
 
 # materialize all data
 CREATE MATERIALIZED VIEW all_tripvibe AS
-    SELECT (text::JSONB)->'location_lng' as location_lng,
-           (text::JSONB)->'location_lat' as location_lat,
+    SELECT CAST((text::JSONB)->'location_lng' as float) as location_lng,
+           CAST((text::JSONB)->'location_lat' as float) as location_lat,
            CAST((text::JSONB)->'timestamp_created' AS timestamptz) as timestamp_created,
-           CAST((text::JSONB)->'sentiment'->'departure_time' AS timestamptz) as departure_time,           
-           (text::JSONB)->'sentiment'->'vibe' as vibe,
-           (text::JSONB)->'sentiment'->'capacity' as capacity,
-           (text::JSONB)->'sentiment'->'route_direction' as route_direction,
+           CAST((text::JSONB)->'sentiment'->'departure_time' AS timestamptz) as departure_time,
+           CAST((text::JSONB)->'sentiment'->'estimated_departure_time' AS timestamptz) as estimated_departure_time,           
+           CAST((text::JSONB)->'sentiment'->'vibe' as integer) as vibe,
+           CAST((text::JSONB)->'sentiment'->'capacity' as integer) as capacity,
+           (text::JSONB)->'sentiment'->'direction' as direction,
+           (text::JSONB)->'sentiment'->'direction_id' as direction_id,
            (text::JSONB)->'sentiment'->'route_type' as route_type,
            (text::JSONB)->'sentiment'->'route_number' as route_number,
+           (text::JSONB)->'sentiment'->'route_id' as route_id,
            (text::JSONB)->'sentiment'->'stop_name' as stop_name,
+           CAST((text::JSONB)->'at_platform' AS timestamptz) as at_platform,
+           (text::JSONB)->'sentiment'->'platform_number' as platform_number,
+           (text::JSONB)->'sentiment'->'run_id' as run_id,
+           (text::JSONB)->'sentiment'->'stop_id' as stop_id,
            (text::JSONB)->'submitter'->'device_id' as device_id
     FROM (SELECT * FROM tripvibe);
 
@@ -64,7 +71,7 @@ DROP SOURCE ptv_all_routes;
 #
 
 SELECT avg(capacity) from ROUTE216
-WHERE route_direction = 'foo'
+WHERE direction = 'foo'
 
 SELECT avg(capacity) from ROUTE216
 WHERE stop_name = 'foo'
@@ -74,7 +81,7 @@ WHERE departure_time between start and end;
 
 # materalize only the 216 bus
 CREATE MATERIALIZED VIEW ROUTE216 AS
-    SELECT CAST(location_lng AS float), CAST(location_lat AS float), CAST(vibe AS integer), CAST(capacity AS integer), route_direction, route_type, route_number, timestamp_created, departure_time, stop_name, device_id  
+    SELECT location_lng, location_lat, timestamp_created, departure_time, estimated_departure_time, vibe, capacity, direction, direction_id, route_type, route_number, route_id, stop_name, at_platform, platform_number, run_id, stop_id, device_id
     FROM all_tripvibe
     WHERE route_number = '"216"';
 
@@ -83,7 +90,7 @@ SHOW COLUMNS FROM ROUTE216;
 
 #
 CREATE MATERIALIZED VIEW ROUTE90 AS
-    SELECT CAST(location_lng AS float), CAST(location_lat AS float), CAST(vibe AS integer), CAST(capacity AS integer), route_direction, route_type, route_number, timestamp_created, departure_time, stop_name, device_id  
+    SELECT location_lng, location_lat, timestamp_created, departure_time, estimated_departure_time, vibe, capacity, direction, direction_id, route_type, route_number, route_id, stop_name, at_platform, platform_number, run_id, stop_id, device_id  
     FROM all_tripvibe
     WHERE route_number = '"90"';
 
