@@ -3,10 +3,12 @@ package org.acme.submission;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.infrastructure.Infrastructure;
 import org.acme.data.Submission;
+import org.acme.rest.SCSubmitService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.resteasy.annotations.SseElementType;
 import org.json.JSONObject;
 import org.reactivestreams.Publisher;
@@ -25,8 +27,8 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
 
-@ApplicationScoped
 @Path("/submission")
+@ApplicationScoped
 public class SubmissionResource {
 
     private static final Logger log = LoggerFactory.getLogger(SubmissionResource.class);
@@ -36,11 +38,20 @@ public class SubmissionResource {
     public int pollValue;
 
     @Inject
+    @RestClient
+    SCSubmitService scSubmitService;
+
+    @Inject
     @Channel("tv-emit-out")
     Emitter<Submission> emitter;
 
     @POST
     public void create(Submission submission) {
+        try {
+            scSubmitService.evictSingle(submission.getSentiment().getRoute_id());
+        } catch (Exception ex) {
+            log.warn(ex.getMessage());
+        }
         submission.setTimestamp_created(getNow());
         emitter.send(submission);
     }
@@ -95,8 +106,8 @@ public class SubmissionResource {
 
         JSONObject sentiment = new JSONObject();
         sentiment.put("capacity", new Random().nextInt(100) + 1);
-        sentiment.put("direction", (new Random().nextBoolean() ? "City":"Country"));
-        sentiment.put("direction_id", (new Random().nextBoolean() ? "13":"63"));
+        sentiment.put("direction", (new Random().nextBoolean() ? "City" : "Country"));
+        sentiment.put("direction_id", (new Random().nextBoolean() ? "13" : "63"));
         sentiment.put("route_number", "216");
         sentiment.put("route_type", "2");
         sentiment.put("route_id", "887");
@@ -124,8 +135,8 @@ public class SubmissionResource {
         sentiment.put("route_number", "90");
         sentiment.put("departure_time", getRandomTime());
         sentiment.put("capacity", new Random().nextInt(50) + 51);
-        sentiment.put("direction", (new Random().nextBoolean() ? "City":"Country"));
-        sentiment.put("direction_id", (new Random().nextBoolean() ? "13":"63"));
+        sentiment.put("direction", (new Random().nextBoolean() ? "City" : "Country"));
+        sentiment.put("direction_id", (new Random().nextBoolean() ? "13" : "63"));
         sentiment.put("route_number", "90");
         sentiment.put("route_type", "3");
         sentiment.put("route_id", "11795");
