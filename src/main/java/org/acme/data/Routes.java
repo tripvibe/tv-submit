@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 public class Routes {
 }
 
+@Entity(name="ROUTEALL")
+class RouteAll extends Route {}
 @Entity(name="ROUTE216")
 class Route216 extends Route {}
 @Entity(name="ROUTE90")

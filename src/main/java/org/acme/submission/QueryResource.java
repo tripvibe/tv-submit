@@ -23,7 +23,7 @@ public class QueryResource {
     EntityManager entityManager;
 
     @GET
-    @Path("{route_id}")
+    @Path("/submissions/route/{route_id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(operationId = "getRoutes",
             summary = "get submissions",
@@ -43,7 +43,7 @@ public class QueryResource {
             deprecated = false,
             hidden = false)
     public Long count(@PathParam String route_id) {
-        return entityManager.createQuery("select count(*) from ROUTE" + route_id + " r", Long.class).getSingleResult();
+        return entityManager.createQuery("select count(*) from ROUTE" + route_id, Long.class).getSingleResult();
     }
 
     @GET
@@ -55,7 +55,19 @@ public class QueryResource {
             deprecated = false,
             hidden = false)
     public Long countDirected(@PathParam String route_id, @PathParam String direction_id) {
-        return entityManager.createQuery("select count(*) from ROUTE" + route_id + " r where direction_id = '\"" + direction_id + "\"'", Long.class).getSingleResult();
+        return entityManager.createQuery("select count(*) from ROUTE" + route_id + " where direction_id = '\"" + direction_id + "\"'", Long.class).getSingleResult();
+    }
+
+    @GET
+    @Path("/submissions/device/{device_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(operationId = "queryDeviceID",
+            summary = "query submissions by device_id",
+            description = "This operation returns all submissions for a device_id",
+            deprecated = false,
+            hidden = false)
+    public List<Route> queryDeviceID(@PathParam String device_id) {
+        return entityManager.createQuery("select r from ROUTEALL r where device_id = '\"" + device_id + "\"'", Route.class).getResultList();
     }
 
     @GET

@@ -23,16 +23,8 @@ CREATE MATERIALIZED VIEW all_tripvibe AS
            (text::JSONB)->'submitter'->'device_id' as device_id
     FROM (SELECT * FROM tripvibe);
 
-CREATE SOURCE ptv_all_routes
-FROM FILE '/work/tv-submit-data/all_routes.json'
-FORMAT REGEX '^(?P<data>\{.*)$';
-
-CREATE MATERIALIZED VIEW all_routes AS
-    SELECT CAST((data::JSONB)->'route_type' as int) as route_type,
-           CAST((data::JSONB)->'route_id' as int) as route_id,
-           (data::JSONB)->'route_name' as route_name,
-           (data::JSONB)->'route_number' as route_number
-    FROM ptv_all_routes;
+CREATE MATERIALIZED VIEW ROUTEALL AS
+    SELECT * FROM all_tripvibe;
 
 CREATE MATERIALIZED VIEW ROUTE216 AS
     SELECT location_lng, location_lat, timestamp_created, departure_time, estimated_departure_time, vibe, capacity, direction, direction_id, route_type, route_number, route_id, stop_name, at_platform, platform_number, run_id, stop_id, device_id

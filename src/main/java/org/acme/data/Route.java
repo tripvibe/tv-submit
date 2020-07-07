@@ -20,7 +20,7 @@ public class Route extends PanacheEntityBase {
     private Float location_lat;
     private Integer vibe;
     private Integer capacity;
-    private String route_direction;
+    private String direction_id;
     private String route_type;
     private String route_number;
     private String timestamp_created;
@@ -65,16 +65,16 @@ public class Route extends PanacheEntityBase {
         this.capacity = capacity;
     }
 
-    public String getRoute_direction() {
-        return route_direction;
+    public String getDirection_id() {
+        return direction_id.replace("\"", "");
     }
 
-    public void setRoute_direction(String route_direction) {
-        this.route_direction = route_direction;
+    public void setDirection_id(String direction_id) {
+        this.direction_id = direction_id;
     }
 
     public String getRoute_type() {
-        return route_type;
+        return route_type.replace("\"", "");
     }
 
     public void setRoute_type(String route_type) {
@@ -82,7 +82,7 @@ public class Route extends PanacheEntityBase {
     }
 
     public String getRoute_number() {
-        return route_number;
+        return route_number.replace("\"", "");
     }
 
     public void setRoute_number(String route_number) {
@@ -106,7 +106,7 @@ public class Route extends PanacheEntityBase {
     }
 
     public String getStop_name() {
-        return stop_name;
+        return stop_name.replace("\"", "");
     }
 
     public void setStop_name(String stop_name) {
@@ -114,7 +114,7 @@ public class Route extends PanacheEntityBase {
     }
 
     public String getDevice_id() {
-        return device_id;
+        return device_id.replace("\"", "");
     }
 
     public void setDevice_id(String device_id) {
