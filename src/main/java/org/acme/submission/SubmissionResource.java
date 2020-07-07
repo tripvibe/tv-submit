@@ -5,6 +5,7 @@ import io.smallrye.mutiny.infrastructure.Infrastructure;
 import org.acme.data.Submission;
 import org.acme.rest.SCSubmitService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
@@ -46,6 +47,11 @@ public class SubmissionResource {
     Emitter<Submission> emitter;
 
     @POST
+    @Operation(operationId = "create",
+            summary = "create a sentiment submission",
+            description = "This operation allows the UI to submit sentiment submissions",
+            deprecated = false,
+            hidden = false)
     public void create(Submission submission) {
         try {
             scSubmitService.evictSingle(submission.getSentiment().getRoute_id());
@@ -93,6 +99,11 @@ public class SubmissionResource {
     @Path("/stream")
     @Produces(MediaType.SERVER_SENT_EVENTS)
     @SseElementType(MediaType.APPLICATION_JSON) //avro/binary
+    @Operation(operationId = "stream",
+            summary = "stream all sentiment submissions",
+            description = "This operation allows you to stream server side events for all sentiment submissions",
+            deprecated = false,
+            hidden = false)
     public Publisher<String> stream() {
         return rawData;
     }
