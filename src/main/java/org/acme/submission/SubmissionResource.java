@@ -23,6 +23,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -52,7 +53,7 @@ public class SubmissionResource {
             description = "This operation allows the UI to submit sentiment submissions",
             deprecated = false,
             hidden = false)
-    public void create(Submission submission) {
+    public Response create(Submission submission) {
         try {
             scSubmitService.evictSingle(submission.getSentiment().getRoute_id());
         } catch (Exception ex) {
@@ -60,6 +61,7 @@ public class SubmissionResource {
         }
         submission.setTimestamp_created(getNow());
         emitter.send(submission);
+        return Response.ok(submission).status(201).build();
     }
 
     /**
