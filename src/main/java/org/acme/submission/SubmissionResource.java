@@ -55,6 +55,8 @@ public class SubmissionResource {
             hidden = false)
     public Response create(Submission submission) {
         try {
+            String cacheKey = String.format("%s-%s-%s-%s-%s", submission.getSentiment().getRoute_id(), submission.getSentiment().getRoute_type(), submission.getSentiment().getDirection_id(), submission.getSentiment().getRun_id(), submission.getSentiment().getStop_id());
+            scSubmitService.evictSingle(cacheKey);
             scSubmitService.evictSingle(submission.getSentiment().getRoute_id());
         } catch (Exception ex) {
             log.warn(ex.getMessage());
