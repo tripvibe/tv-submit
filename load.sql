@@ -3,7 +3,8 @@ FROM KAFKA BROKER 'localhost:9092' TOPIC 'tripvibe'
 FORMAT TEXT;
 
 CREATE MATERIALIZED VIEW all_tripvibe AS
-    SELECT CAST((text::JSONB)->'location_lng' as float) as location_lng,
+    SELECT (text::JSONB)->'id' as id,
+           CAST((text::JSONB)->'location_lng' as float) as location_lng,
            CAST((text::JSONB)->'location_lat' as float) as location_lat,
            CAST((text::JSONB)->'timestamp_created' AS timestamptz) as timestamp_created,
            CAST((text::JSONB)->'sentiment'->'departure_time' AS timestamptz) as departure_time,
@@ -27,11 +28,11 @@ CREATE MATERIALIZED VIEW ROUTEALL AS
     SELECT * FROM all_tripvibe;
 
 CREATE MATERIALIZED VIEW ROUTE216 AS
-    SELECT location_lng, location_lat, timestamp_created, departure_time, estimated_departure_time, vibe, capacity, direction, direction_id, route_type, route_number, route_id, stop_name, at_platform, platform_number, run_id, stop_id, device_id
+    SELECT *
     FROM all_tripvibe
-    WHERE route_number = '"216"';
+    WHERE route_id = '"216"';
 
 CREATE MATERIALIZED VIEW ROUTE90 AS
-    SELECT location_lng, location_lat, timestamp_created, departure_time, estimated_departure_time, vibe, capacity, direction, direction_id, route_type, route_number, route_id, stop_name, at_platform, platform_number, run_id, stop_id, device_id
+    SELECT *
     FROM all_tripvibe
-    WHERE route_number = '"90"';
+    WHERE route_id = '"90"';

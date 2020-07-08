@@ -1,6 +1,7 @@
 package org.acme.submission;
 
 import org.acme.data.Route;
+import org.acme.data.Routes;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ public class QueryResource {
             deprecated = false,
             hidden = false)
     public List<Route> getRoutes(@PathParam String route_id) {
+        //return Routes.RouteAll.listAll();
         return entityManager.createQuery("select r from ROUTE" + route_id + " r", Route.class).getResultList();
     }
 

@@ -16,6 +16,8 @@ public class Route extends PanacheEntityBase {
 
     private final static Logger log = LoggerFactory.getLogger(Route.class);
 
+    @Id
+    private String id;
     private Float location_lng;
     private Float location_lat;
     private Integer vibe;
@@ -26,11 +28,17 @@ public class Route extends PanacheEntityBase {
     private String timestamp_created;
     private String departure_time;
     private String stop_name;
-
-    @Id
     private String device_id;
 
     public Route() {
+    }
+
+    public String getId() {
+        return id.replace("\"", "");
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Float getLocation_lng() {
