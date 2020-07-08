@@ -35,6 +35,9 @@ public class SubmissionResource {
 
     private static final Logger log = LoggerFactory.getLogger(SubmissionResource.class);
 
+    @ConfigProperty(name = "org.acme.submission.submitFake")
+    Boolean enableFake;
+
     /* Poll time for updating from source */
     @ConfigProperty(name = "pollValue", defaultValue = "10")
     public int pollValue;
@@ -84,10 +87,13 @@ public class SubmissionResource {
      */
     @Outgoing("tv-out")
     public Multi<String> generate() throws IOException {
-        Multi<Long> ticks = Multi.createFrom().ticks().every(Duration.ofSeconds(pollValue)).onOverflow().drop();
-        return ticks.onItem().produceMulti(
-                x -> read()
-        ).merge();
+        if (enableFake) {
+            Multi<Long> ticks = Multi.createFrom().ticks().every(Duration.ofSeconds(pollValue)).onOverflow().drop();
+            return ticks.onItem().produceMulti(
+                    x -> read()
+            ).merge();
+        } else
+            return Multi.createFrom().items("");
     }
 
     @Inject
