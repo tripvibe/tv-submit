@@ -106,5 +106,5 @@ DROP SOURCE tripvibe;
 ## OpenShift
 
 ```bash
-oc create -f materialize-deployment.yml
+oc create -f ocp/openshift-deployment.yml
 ```
