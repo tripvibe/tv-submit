@@ -1,10 +1,5 @@
 # tv-submit project
 
-```
-# delete topic if you need to reset data (restart materaliaze container as well)
-/opt/kafka_2.12-2.2.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic tripvibe
-```
-
 TimelyDataFlow using materialize.io
 
 ```
@@ -102,6 +97,14 @@ DROP VIEW ROUTE216;
 DROP VIEW all_tripvibe;
 DROP SOURCE tripvibe;
 ```
+
+Delete kafka topic
+```
+# delete topic if you need to reset data (restart materaliaze container as well)
+/opt/kafka_2.12-2.2.0/bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic tripvibe
+```
+
+
 
 ## OpenShift
 
