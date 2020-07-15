@@ -105,7 +105,7 @@ spec:
               value: oci
             - name: HOSTNAME
               value: materalize
-          image: quay.io/eformat/materialize-pod:latest
+          image: quay.io/eformat/materialize-pod:0.3
           name: materialize-pod
           resources: {}
           securityContext: {}
