@@ -2,6 +2,7 @@ package org.acme.submission;
 
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.infrastructure.Infrastructure;
+import io.vertx.core.json.JsonObject;
 import org.acme.data.Submission;
 import org.acme.rest.SCSubmitService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -11,7 +12,6 @@ import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.resteasy.annotations.SseElementType;
-import org.json.JSONObject;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,12 +123,12 @@ public class SubmissionResource {
 
     private List<String> _read() {
         List<String> subs = new ArrayList<>();
-        JSONObject submission = new JSONObject();
+        JsonObject submission = new JsonObject();
         submission.put("location_lat", -27.502);
         submission.put("location_lng", 152.897);
         submission.put("timestamp_created", getRandomTime());
 
-        JSONObject sentiment = new JSONObject();
+        JsonObject sentiment = new JsonObject();
         sentiment.put("capacity", new Random().nextInt(100) + 1);
         sentiment.put("direction", (new Random().nextBoolean() ? "City" : "Country"));
         sentiment.put("direction_id", (new Random().nextBoolean() ? "13" : "63"));
@@ -144,7 +144,7 @@ public class SubmissionResource {
         sentiment.put("at_platform", false);
         sentiment.put("platform_number", "");
 
-        JSONObject submitter = new JSONObject();
+        JsonObject submitter = new JsonObject();
         submitter.put("device_id", "8316080933289526961");
 
         submission.put("sentiment", sentiment);
