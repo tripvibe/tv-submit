@@ -299,7 +299,7 @@ spec:
       from:
         kind: ImageStreamTag
         name: tv-submit:latest
-      lastTriggeredImage: quay.io/eformat/tv-submit:1.0
+      lastTriggeredImage: quay.io/eformat/tv-submit:latest
     type: ImageChange
 ---
 apiVersion: route.openshift.io/v1
