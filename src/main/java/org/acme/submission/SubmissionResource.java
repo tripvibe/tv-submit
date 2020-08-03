@@ -48,6 +48,10 @@ public class SubmissionResource {
     @Channel("tv-emit-out")
     Emitter<Submission> emitter;
 
+    @Inject
+    @Channel("tv-emit-out-2")
+    Emitter<Submission> emitter2;
+
     @POST
     @Operation(operationId = "create",
             summary = "create a sentiment submission",
@@ -67,6 +71,7 @@ public class SubmissionResource {
         }
         submission.setTimestamp_created(getNow());
         emitter.send(KafkaRecord.of(submission.getSentiment().getRoute_id(), submission));
+        emitter2.send(KafkaRecord.of(String.format("%s-%s-%s-%s-%s", submission.getSentiment().getRoute_id(), submission.getSentiment().getRoute_type(), submission.getSentiment().getDirection_id(), submission.getSentiment().getRun_id(), submission.getSentiment().getStop_id()), submission));
         return Response.ok(submission).status(201).build();
     }
 
