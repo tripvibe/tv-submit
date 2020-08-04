@@ -170,14 +170,14 @@ metadata:
 spec:
   kafka:
     version: 2.5.0
-    replicas: 1
+    replicas: 3
     listeners:
       plain: {}
       tls: {}
     config:
-      offsets.topic.replication.factor: 1
-      transaction.state.log.replication.factor: 1
-      transaction.state.log.min.isr: 1
+      offsets.topic.replication.factor: 3
+      transaction.state.log.replication.factor: 3
+      transaction.state.log.min.isr: 2
       log.message.format.version: "2.5"
     storage:
       type: jbod
@@ -187,7 +187,7 @@ spec:
           size: 10Gi
           deleteClaim: false
   zookeeper:
-    replicas: 1
+    replicas: 3
     storage:
       type: persistent-claim
       size: 10Gi
@@ -195,6 +195,32 @@ spec:
   entityOperator:
     topicOperator: {}
     userOperator: {}
+---
+apiVersion: v1
+items:
+  - apiVersion: kafka.strimzi.io/v1beta1
+    kind: KafkaTopic
+    metadata:
+      labels:
+        strimzi.io/cluster: tv-cluster
+      name: tripvibe
+    spec:
+      config: {}
+      partitions: 3
+      replicas: 2
+      topicName: tripvibe
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  labels:
+    strimzi.io/cluster: tv-cluster
+  name: tripvibe2
+spec:
+  config: {}
+  partitions: 3
+  replicas: 2
+  topicName: tripvibe2
 ---
 apiVersion: image.openshift.io/v1
 kind: ImageStream
