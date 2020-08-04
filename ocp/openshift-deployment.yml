@@ -196,19 +196,17 @@ spec:
     topicOperator: {}
     userOperator: {}
 ---
-apiVersion: v1
-items:
-  - apiVersion: kafka.strimzi.io/v1beta1
-    kind: KafkaTopic
-    metadata:
-      labels:
-        strimzi.io/cluster: tv-cluster
-      name: tripvibe
-    spec:
-      config: {}
-      partitions: 3
-      replicas: 2
-      topicName: tripvibe
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  labels:
+    strimzi.io/cluster: tv-cluster
+  name: tripvibe
+spec:
+  config: {}
+  partitions: 3
+  replicas: 2
+  topicName: tripvibe
 ---
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaTopic
