@@ -16,5 +16,5 @@ Delete kafka topic
 ## OpenShift
 
 ```bash
-oc create -f ocp/openshift-deployment.yml
+oc create -f ocp/openshift-deployment.yaml
 ```
