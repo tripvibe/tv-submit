@@ -203,7 +203,9 @@ metadata:
     strimzi.io/cluster: tv-cluster
   name: tripvibe
 spec:
-  config: {}
+  config:
+    min.insync.replicas: 2
+    retention.ms: -1
   partitions: 3
   replicas: 2
   topicName: tripvibe
@@ -215,7 +217,9 @@ metadata:
     strimzi.io/cluster: tv-cluster
   name: tripvibe2
 spec:
-  config: {}
+  config:
+    min.insync.replicas: 2
+    retention.ms: -1
   partitions: 3
   replicas: 2
   topicName: tripvibe2
