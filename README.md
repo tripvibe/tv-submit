@@ -1,5 +1,14 @@
 # tv-submit project
 
+Sentiment submission for tripvibe.
+
+## Locally
+
+Build and Run
+```bash
+mvn quarkus:dev
+```
+
 TimelyDataFlow using materialize.io
 ```
 # schema load
