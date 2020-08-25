@@ -1,0 +1,11 @@
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "tv-submit.fullname" . }}
+  labels:
+    {{- include "tv-submit.labels" . | nindent 4 }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      deploymentconfig: {{ include "tv-submit.fullname" . }}
