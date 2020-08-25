@@ -7,7 +7,7 @@ metadata:
   labels:
     {{- include "tv-submit.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.replicas.min }}
   revisionHistoryLimit: 10
   selector:
     {{- include "tv-submit.selectorLabels" . | nindent 4 }}
